@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="POC.ServiceFabricType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="POCActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="POCActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="POCActorService_TargetReplicaSetSize" DefaultValue="3" />
+  </Parameters>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="POC.ServiceFabric.GatewayPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="POC.ServiceFabric.POCActorPkg" ServiceManifestVersion="1.0.0" />
+  </ServiceManifestImport>
+  <DefaultServices>
+    <Service Name="POCActorService" GeneratedIdRef="2a55404b-1f86-45c1-ab81-4fefb3668c31|Persisted">
+      <StatefulService ServiceTypeName="POCActorServiceType" TargetReplicaSetSize="[POCActorService_TargetReplicaSetSize]" MinReplicaSetSize="[POCActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[POCActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+  </DefaultServices>
+</ApplicationManifest>
